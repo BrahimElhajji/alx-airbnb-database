@@ -1,4 +1,7 @@
--- Initial complex query to retrieve all bookings with related user, property, and payment details
+-- Initial complex query with filtering and performance analysis
+
+-- Analyze the query's execution
+EXPLAIN
 SELECT 
     bookings.id AS booking_id,
     users.name AS user_name,
@@ -8,4 +11,6 @@ SELECT
 FROM bookings
 JOIN users ON bookings.user_id = users.id
 JOIN properties ON bookings.property_id = properties.id
-LEFT JOIN payments ON payments.booking_id = bookings.id;
+LEFT JOIN payments ON payments.booking_id = bookings.id
+WHERE payments.amount IS NOT NULL AND bookings.created_at IS NOT NULL;
+
